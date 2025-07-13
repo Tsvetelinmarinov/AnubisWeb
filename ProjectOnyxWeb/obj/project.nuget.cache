@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "OQwRm42019U=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Cvete\\OneDrive\\Documents\\VisualStudio\\Projects\\Onyx\\OnyxWebBrowser\\ProjectOnyxWeb\\ProjectOnyxWeb.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Cvete\\.nuget\\packages\\microsoft.web.webview2\\1.0.3351.48\\microsoft.web.webview2.1.0.3351.48.nupkg.sha512"
+  ],
+  "logs": []
+}
