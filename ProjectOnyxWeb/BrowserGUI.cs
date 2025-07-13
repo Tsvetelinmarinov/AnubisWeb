@@ -13,7 +13,7 @@ namespace ProjectOnyxWeb
     ///  Simple web browser
     /// </summary>
     internal class BrowserGUI : Form
-    {
+    { 
         #region Private System Members
 
         // Default home page of the browser

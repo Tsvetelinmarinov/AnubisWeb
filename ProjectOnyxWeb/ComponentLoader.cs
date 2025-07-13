@@ -105,7 +105,7 @@ namespace ProjectOnyxWeb
 
             buttons[3]!.MouseClick += (sender, eventArgs) =>
             {
-                engine!.CoreWebView2.Navigate(defaultPage.AbsolutePath);              
+                engine!.CoreWebView2.Navigate("https://www.bing.com");              
             };
 
             buttons[4]!.MouseClick += (sender, eventArgs) =>
