@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOnyxWeb", "ProjectOnyxWeb\ProjectOnyxWeb.csproj", "{DBFCAD53-3D7C-435B-BE4D-120B30F314ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBFCAD53-3D7C-435B-BE4D-120B30F314ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFCAD53-3D7C-435B-BE4D-120B30F314ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFCAD53-3D7C-435B-BE4D-120B30F314ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFCAD53-3D7C-435B-BE4D-120B30F314ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72EF6BA8-991D-41CA-BB01-DF9C3A03F988}
+	EndGlobalSection
+EndGlobal
