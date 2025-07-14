@@ -50,7 +50,7 @@ namespace ProjectOnyxWeb
             engine!.Size = new(window.Width - 25, window.Height - 37);
             engine!.Location = new(4, 37);
             engine!.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Top;          
-            window.Controls.Add(engine);
+            window.Controls.Add(engine);           
         }
 #pragma warning restore IDE0060
 

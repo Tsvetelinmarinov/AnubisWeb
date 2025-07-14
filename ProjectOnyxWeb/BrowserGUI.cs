@@ -66,7 +66,7 @@ namespace ProjectOnyxWeb
             );
             ComponentLoader.SetAppearanceOptions(this, searchBox!, engine!);
 
-            engine!.CoreWebView2.Navigate("https://www.bing.com");
+            engine!.CoreWebView2.Navigate("https://www.google.bg");
         }
 
         #endregion
