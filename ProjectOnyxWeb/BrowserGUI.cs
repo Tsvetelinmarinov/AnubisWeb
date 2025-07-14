@@ -64,7 +64,7 @@ namespace ProjectOnyxWeb
                 defaultPage,
                 searchBox
             );
-            ComponentLoader.SetAppearanceOptions(this);
+            ComponentLoader.SetAppearanceOptions(this, searchBox!, engine!);
 
             engine!.CoreWebView2.Navigate("https://www.bing.com");
         }

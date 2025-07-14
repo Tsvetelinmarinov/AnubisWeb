@@ -6,7 +6,6 @@ using Microsoft.Web.WebView2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,7 +16,8 @@ namespace ProjectOnyxWeb
     /// </summary>
     internal static class ComponentLoader
     {
-        //Tool tip for theme button and home button and for the search box
+        
+        // Tool tip for theme button and home button and for the search boxм
         private static readonly ToolTip tip = new();
 
         #region Interface
@@ -69,6 +69,7 @@ namespace ProjectOnyxWeb
             box!.BackColor = Color.GhostWhite;
             box!.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
             box!.BorderStyle = BorderStyle.FixedSingle;
+            box!.ForeColor = Color.DarkGray;
             tip.SetToolTip(box, "Enter a web adress or a site name");
 
             window.Controls.Add(box);
@@ -141,7 +142,7 @@ namespace ProjectOnyxWeb
         ///  Creates a button who shows appearance window.
         /// </summary>
         /// <param name="window"></param>
-        internal static void SetAppearanceOptions(Form window)
+        internal static void SetAppearanceOptions(Form window, TextBox searchBox, WebView2 engine)
         {
             PictureBox button = new()
             {
@@ -150,7 +151,7 @@ namespace ProjectOnyxWeb
                 Image = Properties.Resources.theme,
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
-            button.MouseClick += (sender, eventArgs) => OpenAppearanceWindow();
+            button.MouseClick += (sender, eventArgs) => OpenAppearanceWindow(window, searchBox, engine);
             tip.SetToolTip(button, "Change the theme");
 
             window.Controls.Add(button);
@@ -163,7 +164,7 @@ namespace ProjectOnyxWeb
         /// <summary>
         ///  Opens appearance window
         /// </summary>
-        private static void OpenAppearanceWindow()
+        private static void OpenAppearanceWindow(Form wind, TextBox searchBox, WebView2 engine)
         {
             PictureBox themeIcon = new()
             {
@@ -171,6 +172,16 @@ namespace ProjectOnyxWeb
                 Location = new(220, 17),
                 Image = Properties.Resources.theme,
                 SizeMode = PictureBoxSizeMode.StretchImage
+            };
+
+            Form appearance = new()
+            {
+                Size = new(300, 100),
+                StartPosition = FormStartPosition.CenterParent,
+                Text = "Choose theme",
+                BackColor = Color.GhostWhite,
+                MaximizeBox = false,
+                Icon = Properties.Resources.changeTheme
             };
 
             ComboBox themeBox = new()
@@ -183,21 +194,47 @@ namespace ProjectOnyxWeb
             };
             themeBox.Items.Add("ligth");
             themeBox.Items.Add("dark");
-
-            Form appearance = new()
+            themeBox.SelectedIndexChanged += (sender, eventArgs) =>
             {
-                Size = new(300, 100),
-                StartPosition = FormStartPosition.CenterParent,
-                Text = "Choose theme",
-                BackColor = Color.GhostWhite,
-                MaximizeBox = false,
-                Icon = Properties.Resources.changeTheme
+                if (themeBox.SelectedIndex.Equals(0))
+                {
+                    SetLigthTheme(wind, appearance, searchBox, engine);
+                }
+                else if (themeBox.SelectedIndex.Equals(1))
+                {
+                    SetDarkTheme(wind, appearance, searchBox, engine);
+                }
             };
+
             appearance.MinimumSize = appearance.Size;
             appearance.MaximumSize = appearance.Size;
             appearance.Controls.Add(themeBox);
             appearance.Controls.Add(themeIcon);
             appearance.Visible = true;
+        }
+
+        /// <summary>
+        ///  Sets the dark theme of the application
+        /// </summary>
+        private static void SetDarkTheme(Form window, Form appearanceWind, TextBox searchBox, WebView2 engine)
+        {
+            window.BackColor = Color.FromArgb(30, 30, 30);
+            appearanceWind.BackColor = window.BackColor;
+            searchBox.BackColor = Color.FromArgb(40, 40, 40);
+            searchBox.ForeColor = Color.FromArgb(235, 235, 235);
+            engine.BackColor = Color.FromArgb(35, 35, 35);
+        }
+
+        /// <summary>
+        ///  Sets the original ligth theme of the application
+        /// </summary>
+        private static void SetLigthTheme(Form window, Form appearanceWind, TextBox searchBox, WebView2 engine)
+        {
+            window.BackColor = Color.GhostWhite;
+            appearanceWind.BackColor = Color.GhostWhite;
+            searchBox.BackColor = Color.GhostWhite;
+            searchBox.ForeColor = Color.FromArgb(235, 235, 235);
+            engine.BackColor = Color.GhostWhite;
         }
 
         #endregion
