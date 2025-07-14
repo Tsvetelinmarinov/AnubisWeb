@@ -16,8 +16,7 @@ namespace ProjectOnyxWeb
     /// </summary>
     internal static class ComponentLoader
     {
-        
-        // Tool tip for theme button and home button and for the search boxм
+        // Tool tip for theme button and home button and for the search box
         private static readonly ToolTip tip = new();
 
         #region Interface
@@ -29,7 +28,7 @@ namespace ProjectOnyxWeb
         internal static void SetWinProperties(Form window)
         {
             window.Text = "Onyx Web";
-            window.Size = new(1600, 800);
+            window.Size = new(1800, 1000);
             window.StartPosition = FormStartPosition.CenterScreen;
             window.Icon = Properties.Resources.secondWeb;
             window.BackColor = Color.GhostWhite;
@@ -166,14 +165,6 @@ namespace ProjectOnyxWeb
         /// </summary>
         private static void OpenAppearanceWindow(Form wind, TextBox searchBox, WebView2 engine)
         {
-            PictureBox themeIcon = new()
-            {
-                Size = new(23, 23),
-                Location = new(220, 17),
-                Image = Properties.Resources.theme,
-                SizeMode = PictureBoxSizeMode.StretchImage
-            };
-
             Form appearance = new()
             {
                 Size = new(300, 100),
@@ -184,13 +175,31 @@ namespace ProjectOnyxWeb
                 Icon = Properties.Resources.changeTheme
             };
 
+            PictureBox themeIcon = new()
+            {
+                Size = new(23, 23),
+                Location = new(240, 17),
+                Image = Properties.Resources.theme,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
+
+            Label themeLabel = new()
+            {
+                Text = "theme",
+                Font = new("Cascadia Code", 11, FontStyle.Regular | FontStyle.Italic),
+                ForeColor = Color.FromArgb(60, 60, 60),
+                Size = new(50, 20),
+                Location = new(10, 20)
+            };
+
             ComboBox themeBox = new()
             {
                 Size = new(150, 40),
-                Location = new(46, 15),
+                Location = new(70, 15),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 BackColor = Color.GhostWhite,
-                Font = new("Cascadia Code", 11, FontStyle.Regular)
+                Font = new("Cascadia Code", 11, FontStyle.Regular),
+                SelectedText = "Choose option"
             };
             themeBox.Items.Add("ligth");
             themeBox.Items.Add("dark");
@@ -210,6 +219,7 @@ namespace ProjectOnyxWeb
             appearance.MaximumSize = appearance.Size;
             appearance.Controls.Add(themeBox);
             appearance.Controls.Add(themeIcon);
+            appearance.Controls.Add(themeLabel);
             appearance.Visible = true;
         }
 
