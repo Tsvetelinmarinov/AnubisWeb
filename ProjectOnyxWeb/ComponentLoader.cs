@@ -68,7 +68,6 @@ namespace ProjectOnyxWeb
             box!.BackColor = Color.GhostWhite;
             box!.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
             box!.BorderStyle = BorderStyle.FixedSingle;
-            box!.ForeColor = Color.DarkGray;
             tip.SetToolTip(box, "Enter a web adress or a site name");
 
             window.Controls.Add(box);
@@ -94,8 +93,8 @@ namespace ProjectOnyxWeb
             buttons[0]!.Location = new(10, 6);
             buttons[1]!.Location = new(45, 6);
             buttons[2]!.Location = new(90, 6);
-            buttons[3]!.Location = new(1088, 6);
-            buttons[4]!.Location = new(1535, 6);
+            buttons[3]!.Location = new(1286, 6);
+            buttons[4]!.Location = new(1725, 6);
             buttons[4]!.Anchor = AnchorStyles.Right | AnchorStyles.Top;
 
             buttons[0]!.Image = Properties.Resources.leftArrow;
@@ -127,6 +126,7 @@ namespace ProjectOnyxWeb
                 )
                 {
                     engine!.CoreWebView2.Navigate($"https://www.{searchBox.Text}.com");
+                    searchBox.Text = string.Empty;
                 }
                 else
                 {
