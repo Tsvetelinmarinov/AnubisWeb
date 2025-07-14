@@ -28,11 +28,12 @@ namespace ProjectOnyxWeb
         private readonly PictureBox? refreshButton;
         private readonly PictureBox? goHomeButton;
         private readonly PictureBox? searchButton;
+        
 
         // The text box used to enter the URL adress in
         private readonly TextBox? searchBox = new();
 
-        //The engine of the web browser - The core System.Windows.Forms.WebBrowser object
+        //The engine of the web browser: An object of type WebView2 - The Micosoft Edge WebView2 engine
         private readonly WebView2? engine = new();
 
         #endregion
@@ -63,6 +64,7 @@ namespace ProjectOnyxWeb
                 defaultPage,
                 searchBox
             );
+            ComponentLoader.SetAppearanceOptions(this);
 
             engine!.CoreWebView2.Navigate("https://www.bing.com");
         }

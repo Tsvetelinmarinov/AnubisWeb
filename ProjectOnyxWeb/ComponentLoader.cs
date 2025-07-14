@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,6 +17,11 @@ namespace ProjectOnyxWeb
     /// </summary>
     internal static class ComponentLoader
     {
+        //Tool tip for theme button and home button and for the search box
+        private static readonly ToolTip tip = new();
+
+        #region Interface
+
         /// <summary>
         ///  Set the properties of the window like Title, Size, Location etc.
         /// </summary>
@@ -63,6 +69,7 @@ namespace ProjectOnyxWeb
             box!.BackColor = Color.GhostWhite;
             box!.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
             box!.BorderStyle = BorderStyle.FixedSingle;
+            tip.SetToolTip(box, "Enter a web adress or a site name");
 
             window.Controls.Add(box);
         }
@@ -107,6 +114,7 @@ namespace ProjectOnyxWeb
             {
                 engine!.CoreWebView2.Navigate("https://www.bing.com");              
             };
+            tip.SetToolTip(buttons[3]!, "Go home");
 
             buttons[4]!.MouseClick += (sender, eventArgs) =>
             {
@@ -128,5 +136,70 @@ namespace ProjectOnyxWeb
 
             buttons.ForEach(window.Controls.Add);
         }
+
+        /// <summary>
+        ///  Creates a button who shows appearance window.
+        /// </summary>
+        /// <param name="window"></param>
+        internal static void SetAppearanceOptions(Form window)
+        {
+            PictureBox button = new()
+            {
+                Size = new(18, 18),
+                Location = new(150, 8),
+                Image = Properties.Resources.theme,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
+            button.MouseClick += (sender, eventArgs) => OpenAppearanceWindow();
+            tip.SetToolTip(button, "Change the theme");
+
+            window.Controls.Add(button);
+        }
+
+        #endregion
+
+        #region System Funtionality
+
+        /// <summary>
+        ///  Opens appearance window
+        /// </summary>
+        private static void OpenAppearanceWindow()
+        {
+            PictureBox themeIcon = new()
+            {
+                Size = new(23, 23),
+                Location = new(220, 17),
+                Image = Properties.Resources.theme,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
+
+            ComboBox themeBox = new()
+            {
+                Size = new(150, 40),
+                Location = new(46, 15),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = Color.GhostWhite,
+                Font = new("Cascadia Code", 11, FontStyle.Regular)
+            };
+            themeBox.Items.Add("ligth");
+            themeBox.Items.Add("dark");
+
+            Form appearance = new()
+            {
+                Size = new(300, 100),
+                StartPosition = FormStartPosition.CenterParent,
+                Text = "Choose theme",
+                BackColor = Color.GhostWhite,
+                MaximizeBox = false,
+                Icon = Properties.Resources.changeTheme
+            };
+            appearance.MinimumSize = appearance.Size;
+            appearance.MaximumSize = appearance.Size;
+            appearance.Controls.Add(themeBox);
+            appearance.Controls.Add(themeIcon);
+            appearance.Visible = true;
+        }
+
+        #endregion
     }
 }
