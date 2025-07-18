@@ -14,9 +14,9 @@ namespace ProjectAnubisWeb
     /// <summary>
     ///  Provides static methods to create and set the components of the browser
     /// </summary>
-    internal static class ComponentLoader
+    internal class ComponentLoader
     {
-        #region Privet System Members
+        #region Private System Members
 
         // Tool tip for theme button and home button and for the search box
         private static readonly ToolTip tip = new();
@@ -41,6 +41,7 @@ namespace ProjectAnubisWeb
             window.MinimizeBox = true;
             window.Dock = DockStyle.Fill;
             window.MinimumSize = window.Size;
+            window.Shown += (sender, eventArgs) => SetDarkTheme(window);
         }
 
         /// <summary>
@@ -69,7 +70,8 @@ namespace ProjectAnubisWeb
             box!.Size = new(400, 22);
             box!.Location = new(window.Width - 480, 6);
             box!.Font = new("Cascadia Code", 11, FontStyle.Regular);
-            box!.BackColor = Color.GhostWhite;
+            box!.BackColor = Color.FromArgb(40, 40, 45);
+            box!.ForeColor = Color.GhostWhite;
             box!.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
             box!.BorderStyle = BorderStyle.FixedSingle;
             tip.SetToolTip(box, "Enter a web adress or a site name");
@@ -83,7 +85,7 @@ namespace ProjectAnubisWeb
         /// </summary>
         /// <param name="window"></param>
         /// <param name="buttons"></param>
-        internal static async Task SetButtons(Form window, List<PictureBox?> buttons, WebView2? engine, Uri defaultPage, TextBox? searchBox)
+        internal static async Task SetBaseButtons(Form window, List<PictureBox?> buttons, WebView2? engine, Uri defaultPage, TextBox? searchBox)
         {
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -210,13 +212,17 @@ namespace ProjectAnubisWeb
         /// <summary>
         ///  Sets the dark theme of the application
         /// </summary>
-        private static void SetDarkTheme(Form window, Form appearanceWind, TextBox searchBox, WebView2 engine)
+        private static void SetDarkTheme(Form window, Form? appearanceWind = null, TextBox? searchBox = null, WebView2? engine = null)
         {
             window.BackColor = Color.FromArgb(30, 30, 30);
-            appearanceWind.BackColor = window.BackColor;
-            searchBox.BackColor = Color.FromArgb(40, 40, 40);
-            searchBox.ForeColor = Color.FromArgb(235, 235, 235);
-            engine.BackColor = Color.FromArgb(35, 35, 35);
+
+            if (appearanceWind != null && searchBox != null && engine != null)
+            {
+                appearanceWind.BackColor = window.BackColor;
+                searchBox.BackColor = Color.FromArgb(40, 40, 40);
+                searchBox.ForeColor = Color.FromArgb(235, 235, 235);
+                engine.BackColor = Color.FromArgb(35, 35, 35);
+            }          
         }
 
         /// <summary>
@@ -250,14 +256,14 @@ namespace ProjectAnubisWeb
         /// </summary>
         /// <param name="engine"></param>
         private static void ReloadPage(WebView2 engine)
-            => engine.Refresh();
+            => engine.CoreWebView2.Reload();
 
         /// <summary>
         ///  Navigate to the home page
         /// </summary>
         /// <param name="engine"></param>
         private static void NavigateHome(WebView2 engine)
-            => engine.CoreWebView2.Navigate("https://www.google.bg");
+            => engine.CoreWebView2.Navigate("https://www.bing.com");
 
         /// <summary>
         ///  Search the text in the text box in the web
@@ -266,13 +272,15 @@ namespace ProjectAnubisWeb
         /// <param name="searchBox"></param>
         private static void SearchInWeb(WebView2 engine, TextBox searchBox)
         {
-            if (!searchBox!.Text.EndsWith(".com") ||
+            bool isJustTheName = 
+                    !searchBox!.Text.EndsWith(".com") ||
                     !searchBox!.Text.EndsWith(".net") ||
                     !searchBox!.Text.EndsWith(".bg") ||
                     !searchBox!.Text.EndsWith(".org") ||
                     !searchBox!.Text.EndsWith(".edu") ||
-                    !searchBox!.Text.StartsWith("https://www.")
-                )
+                    !searchBox!.Text.StartsWith("https://www.");
+
+            if (isJustTheName) 
             {
                 engine!.CoreWebView2.Navigate($"https://www.{searchBox.Text}.com");
                 searchBox.Text = string.Empty;

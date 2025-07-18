@@ -60,7 +60,7 @@ namespace ProjectAnubisWeb
             ComponentLoader.SetWinProperties(this);
             ComponentLoader.SetWebEngine(this, engine);
             ComponentLoader.SetSearchBox(this, searchBox);
-            await ComponentLoader.SetButtons(
+            await ComponentLoader.SetBaseButtons(
                 this,
                 [goBackButton, goForwardButton, refreshButton, goHomeButton, searchButton],
                 engine,
@@ -69,7 +69,7 @@ namespace ProjectAnubisWeb
             );
             ComponentLoader.SetAppearanceOptions(this, searchBox!, engine!);
 
-            engine!.CoreWebView2.Navigate("https://www.google.bg");
+            engine!.CoreWebView2.Navigate(defaultPage.ToString());
         }
 
         #endregion
