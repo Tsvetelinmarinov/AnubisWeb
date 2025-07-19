@@ -68,7 +68,8 @@ namespace ProjectAnubisWeb
                 searchBox
             );
             ComponentLoader.SetAppearanceButton(this, searchBox!, engine!);
-            ComponentLoader.SetHistoryButton(this);
+            ComponentLoader.SetHistoryButton(this, engine!);
+            ComponentLoader.SetTabPanel(this);
 
             engine!.CoreWebView2.Navigate(defaultPage.ToString());
         }

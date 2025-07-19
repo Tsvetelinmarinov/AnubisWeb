@@ -156,7 +156,7 @@ namespace ProjectAnubisWeb
         ///  Create a button who opens window with the browsing history
         /// </summary>
         /// <param name="window"></param>
-        internal static void SetHistoryButton(Form window)
+        internal static void SetHistoryButton(Form window, WebView2 engine)
         {
             PictureBox historyButton = new()
             {
@@ -165,11 +165,42 @@ namespace ProjectAnubisWeb
                 Image = Properties.Resources.historyIcon,
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
-            historyButton.Click += (sender, eventArgs) => OpenHistoryWindow();
+            historyButton.Click += (sender, eventArgs) => OpenHistoryWindow(engine);
 
             tip.SetToolTip(historyButton, "Show history");
 
             window.Controls.Add(historyButton);
+        }
+
+        /// <summary>
+        ///  Creates a panel for new tabs
+        /// </summary>
+        /// <param name="window"></param>
+        internal static void SetTabPanel(Form window)
+        {
+            TabControl tabs;
+            PictureBox newTab;
+
+            tabs = new()
+            {
+                Location = new(220, 4),
+                Size = new(1000, 27),
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom
+            };
+
+            newTab = new()
+            {
+                Size = new(21, 21),
+                Location = new(1225, 7),
+                Image = Properties.Resources.newTab,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
+            newTab.Click += (sender, eventArgs) => CreateNewTab(tabs);
+
+            tip.SetToolTip(newTab, "Open new tab");
+
+            window.Controls.Add(newTab);
+            window.Controls.Add(tabs);
         }
 
         #endregion
@@ -298,7 +329,7 @@ namespace ProjectAnubisWeb
         ///  Opens window with the browsed history
         /// </summary>
         /// <param name="window"></param>
-        private static void OpenHistoryWindow()
+        private static void OpenHistoryWindow(WebView2 engine)
         {
             Form historyWind;
             ListBox links;
@@ -322,7 +353,9 @@ namespace ProjectAnubisWeb
                 ScrollAlwaysVisible = true,
                 BackColor = Color.GhostWhite,
                 Font = new Font("Cascadia Code", 9),
+                HorizontalScrollbar = true,               
             };
+            links.SelectedIndexChanged += (sender, eventArgs) => NavigateToStoredLink(engine, links);
 
             foreach (string link in history!)
             {
@@ -351,6 +384,19 @@ namespace ProjectAnubisWeb
             => history!.Add(engine.CoreWebView2.Source);
 
         /// <summary>
+        ///  Calls when users click some of the links in the history
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <param name="links"></param>
+        private static void NavigateToStoredLink(WebView2 engine, ListBox links)
+        {
+            if (links.SelectedItem != null)
+            {
+                engine.CoreWebView2.Navigate(links.SelectedItem!.ToString());
+            }
+        }       
+
+        /// <summary>
         ///  Sets the dark theme of the application
         /// </summary>
         private static void SetDarkTheme(Form window, Form? appearanceWind = null, TextBox? searchBox = null, WebView2? engine = null)
@@ -376,6 +422,23 @@ namespace ProjectAnubisWeb
             searchBox.BackColor = Color.GhostWhite;
             searchBox.ForeColor = Color.FromArgb(235, 235, 235);
             engine.BackColor = Color.GhostWhite;
+        }
+
+        /// <summary>
+        ///  Calls when the New tab button (+) is pressed
+        /// </summary>
+        private static void CreateNewTab(TabControl tabControl)
+        {
+            TabPage newTab = new("New tab");
+            WebView2 engine = new();
+
+            engine.EnsureCoreWebView2Async();
+
+            newTab.Controls.Add(engine);
+
+            tabControl.SelectedTab = newTab;
+            tabControl.TabPages.Add(newTab);
+            engine.Source = BrowserGUI.DefaultPage;
         }
 
         #endregion
