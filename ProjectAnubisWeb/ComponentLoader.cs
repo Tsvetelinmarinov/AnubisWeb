@@ -2,12 +2,12 @@
 ///  Anubis Web Browser
 /// </summary>
 
-using Microsoft.Web.WebView2.WinForms;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Web.WebView2.WinForms;
 
 namespace ProjectAnubisWeb
 {
@@ -16,14 +16,9 @@ namespace ProjectAnubisWeb
     /// </summary>
     internal class ComponentLoader
     {
-        #region Private System Members
-
-        // Tool tip for theme button and home button and for the search box
+        // Tool tip for theme and home buttons and for the search box
         private static readonly ToolTip tip = new();
 
-        #endregion
-
-        #region Interface
 
         /// <summary>
         ///  Set the properties of the window like Title, Size, Location etc.
@@ -69,7 +64,7 @@ namespace ProjectAnubisWeb
         {
             box!.Size = new(400, 22);
             box!.Location = new(window.Width - 480, 6);
-            box!.Font = new("Cascadia Code", 11, FontStyle.Regular);
+            box!.Font = new("Cascadia Code", 10, FontStyle.Regular);
             box!.BackColor = Color.FromArgb(40, 40, 45);
             box!.ForeColor = Color.GhostWhite;
             box!.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
@@ -85,13 +80,13 @@ namespace ProjectAnubisWeb
         /// </summary>
         /// <param name="window"></param>
         /// <param name="buttons"></param>
-        internal static async Task SetBaseButtons(Form window, List<PictureBox?> buttons, WebView2? engine, Uri defaultPage, TextBox? searchBox)
+        internal static async Task SetBaseButtons(Form window, List<PictureBox?> buttons, WebView2? engine, TextBox? searchBox)
         {
             for (int i = 0; i < buttons.Count; i++)
             {
                 buttons[i] = new()
                 {
-                    Size = new(25, 25),
+                    Size = new(22, 22),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                 };
             }
@@ -99,7 +94,7 @@ namespace ProjectAnubisWeb
             buttons[0]!.Location = new(10, 6);
             buttons[1]!.Location = new(45, 6);
             buttons[2]!.Location = new(90, 6);
-            buttons[3]!.Location = new(1286, 6);
+            buttons[3]!.Location = new(1286, 7);
             buttons[4]!.Location = new(1725, 6);
             buttons[4]!.Anchor = AnchorStyles.Right | AnchorStyles.Top;
 
@@ -141,10 +136,6 @@ namespace ProjectAnubisWeb
 
             window.Controls.Add(button);
         }
-
-        #endregion
-
-        #region System Funtionality
 
         /// <summary>
         ///  Opens appearance window
@@ -263,7 +254,7 @@ namespace ProjectAnubisWeb
         /// </summary>
         /// <param name="engine"></param>
         private static void NavigateHome(WebView2 engine)
-            => engine.CoreWebView2.Navigate("https://www.bing.com");
+            => engine.CoreWebView2.Navigate(BrowserGUI.DefaultPage.OriginalString);
 
         /// <summary>
         ///  Search the text in the text box in the web
@@ -290,7 +281,5 @@ namespace ProjectAnubisWeb
                 engine!.CoreWebView2.Navigate(searchBox!.Text);
             }
         }
-
-        #endregion
     }
 }
