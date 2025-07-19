@@ -73,10 +73,20 @@ namespace ProjectAnubisWeb.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap history {
+        internal static System.Drawing.Bitmap historyIcon {
             get {
-                object obj = ResourceManager.GetObject("history", resourceCulture);
+                object obj = ResourceManager.GetObject("historyIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon historyWindowIcon {
+            get {
+                object obj = ResourceManager.GetObject("historyWindowIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -146,6 +156,16 @@ namespace ProjectAnubisWeb.Properties {
         internal static System.Drawing.Bitmap theme {
             get {
                 object obj = ResourceManager.GetObject("theme", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap themeNew {
+            get {
+                object obj = ResourceManager.GetObject("themeNew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

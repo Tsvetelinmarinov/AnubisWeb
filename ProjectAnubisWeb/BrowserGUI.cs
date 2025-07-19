@@ -15,7 +15,7 @@ namespace ProjectAnubisWeb
     internal class BrowserGUI : Form
     { 
         // Default home page of the browser
-        private static readonly Uri defaultPage = new("https://www.bing.com/");
+        private static readonly Uri defaultPage = new("https://www.google.com/");
 
         /// <summary>
         ///  The bowser has five different base buttons: Back, Forward, Home, Refresh and Search
@@ -60,14 +60,15 @@ namespace ProjectAnubisWeb
         {          
             ComponentLoader.SetWinProperties(this);
             ComponentLoader.SetWebEngine(this, engine);
-            ComponentLoader.SetSearchBox(this, searchBox);
+            ComponentLoader.SetSearchBox(this, searchBox, engine!);
             await ComponentLoader.SetBaseButtons(
                 this,
                 [goBackButton, goForwardButton, refreshButton, goHomeButton, searchButton],
                 engine,
                 searchBox
             );
-            ComponentLoader.SetAppearanceOptions(this, searchBox!, engine!);
+            ComponentLoader.SetAppearanceButton(this, searchBox!, engine!);
+            ComponentLoader.SetHistoryButton(this);
 
             engine!.CoreWebView2.Navigate(defaultPage.ToString());
         }
